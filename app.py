@@ -76,8 +76,7 @@ def alugar_result():
     modelo = request.form.get('carro_a')
     datareserva = request.form['datareserva']
     datadevolucao = request.form['datadevolucao']
-    valortotal = request.form.get('valortotal')
-    resultado = cadastrar.cadastrar_aluguel(email, modelo, datareserva, datadevolucao, valortotal)
+    resultado = cadastrar.cadastrar_aluguel(email, modelo, datareserva, datadevolucao)
     return render_template('alugar_result.html', 
                            resultado = resultado,
                            carros_disponiveis = listas.listar_carros_disponiveis(),

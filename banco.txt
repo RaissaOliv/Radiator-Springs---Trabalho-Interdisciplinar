@@ -1,0 +1,134 @@
+CREATE TABLE clientes (
+	cliente_id SERIAL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(100) UNIQUE,
+	telefone VARCHAR(15)
+);
+
+CREATE TABLE carros (
+	carro_id SERIAL PRIMARY KEY,
+	marca VARCHAR(100) NOT NULL,
+	modelo VARCHAR(100) NOT NULL,
+	ano INT NOT NULL,
+	placa VARCHAR(10) UNIQUE,
+	preco_inicial MONEY NOT NULL,
+	preco_diario MONEY NOT NULL,
+	disponivel BOOLEAN NOT NULL,
+	popular BOOLEAN NOT NULL,
+	luxo BOOLEAN NOT NULL
+);
+
+CREATE TABLE alugueis (
+	aluguel_id SERIAL PRIMARY KEY,
+	cliente_id INT REFERENCES clientes(cliente_id),
+	carro_id INT REFERENCES carros(carro_id),
+	data_aluguel DATE,
+	data_devolucao DATE,
+	valor_total NUMERIC(10, 2) NOT NULL CHECK (valor_total > 0)
+);
+
+CREATE TABLE reservas (
+	reserva_id SERIAL PRIMARY KEY,
+	cliente_id INT REFERENCES clientes(cliente_id),
+	carro_id INT REFERENCES carros(carro_id),
+	data_inicio DATE,
+	data_fim DATE,
+	reserva_pai_id INT REFERENCES reservas(reserva_id)
+);
+
+INSERT INTO clientes (nome, email, telefone) VALUES
+('João Silva', 'joao@email.com', '123-456-7890'),
+('Maria Oliveira', 'maria@email.com', '987-654-3210'),
+('Carlos Santos', 'carlos@email.com', '555-123-7890'),
+('Ana Souza', 'ana@email.com', '777-888-9999'),
+('Pedro Lima', 'pedro@email.com', '111-222-3333'),
+('Fernanda Costa', 'fernanda@email.com', '444-555-6666'),
+('Lucas Pereira', 'lucas@email.com', '999-888-7777'),
+('Juliana Oliveira', 'juliana@email.com', '222-333-4444'),
+('Roberto Santos', 'roberto@email.com', '666-555-4444'),
+('Amanda Lima', 'amanda@email.com', '333-444-5555');
+
+-- tres primieros nao estao disponiveis e tem 5 de luxo e 5 popular
+INSERT INTO carros (marca, modelo, ano, placa, preco_inicial, preco_diario, disponivel, popular, luxo) VALUES
+('Toyota', 'Corolla', 2020, 'ABC123', 25000.00, 150.00, 'no', 'yes', 'no'),
+('Honda', 'Civic', 2019, 'DEF456', 22000.00, 130.00, 'no', 'yes', 'no'),
+('Ford', 'Focus', 2021, 'GHI789', 27000.00, 160.00, 'no', 'yes', 'no'),
+('Chevrolet', 'Cruze', 2022, 'JKL012', 30000.00, 180.00, 'yes', 'yes', 'no'),
+('BMW', 'X3', 2021, 'MNO345', 40000.00, 250.00, 'yes', 'no', 'yes'),
+('Mercedes', 'C-Class', 2020, 'PQR678', 38000.00, 230.00, 'yes', 'no', 'yes'),
+('Audi', 'A4', 2019, 'STU901', 35000.00, 200.00, 'yes', 'no', 'yes'),
+('Nissan', 'Altima', 2022, 'VWX234', 28000.00, 170.00, 'yes', 'yes', 'no'),
+('Hyundai', 'Elantra', 2020, 'YZA567', 24000.00, 140.00, 'yes', 'no', 'yes'),
+('Kia', 'Optima', 2021, 'BCD890', 26000.00, 160.00, 'yes', 'no', 'yes');
+
+INSERT INTO alugueis (cliente_id, carro_id, data_aluguel, data_devolucao, valor_total) VALUES
+(1, 1, '2023-01-01', '2023-01-10', 1200.00),
+(3, 2, '2023-02-15', '2023-02-20', 750.00),
+(7, 3, '2023-03-10', '2023-03-20', 900.00);
+
+INSERT INTO reservas (cliente_id, carro_id, data_inicio, data_fim, reserva_pai_id) VALUES
+(1, 10, '2023-01-05', '2023-01-08', null),
+(3, 5, '2023-02-18', '2023-02-25', null),
+(2, 6, '2023-03-15', '2023-03-18', null),
+(4, 7, '2023-04-08', '2023-04-12', null),
+(5, 8, '2023-05-18', '2023-05-22', null),
+(6, 9, '2023-06-20', '2023-06-28', null),
+(7, 4, '2023-07-12', '2023-07-18', null);
+
+-- Criação da View
+
+CREATE OR REPLACE VIEW carro_disponivel AS SELECT carros.carro_id,
+carros.marca, carros.modelo, carros.ano, carros.placa,
+carros.preco_inicial, carros.preco_diario, carros.disponivel
+FROM carros WHERE carros.disponivel = true
+ORDER BY carros.carro_id ASC;
+
+CREATE OR REPLACE VIEW carro_popular AS SELECT carros.carro_id,
+carros.marca, carros.modelo, carros.ano, carros.placa,
+carros.preco_inicial, carros.preco_diario, carros.disponivel,
+carros.popular
+FROM carros WHERE carros.popular = true
+ORDER BY carros.carro_id ASC;
+
+CREATE OR REPLACE VIEW carro_luxo AS SELECT carros.carro_id,
+carros.marca, carros.modelo, carros.ano, carros.placa,
+carros.preco_inicial, carros.preco_diario, carros.disponivel,
+carros.luxo
+FROM carros WHERE carros.luxo = true
+ORDER BY carros.carro_id ASC;
+
+CREATE OR REPLACE VIEW listar_reservas AS
+SELECT
+    r.reserva_id,
+    c.nome AS nome_cliente,
+    ca.modelo,
+    ca.marca,
+    r.data_inicio,
+    r.data_fim
+FROM
+    reservas r
+JOIN
+    clientes c ON r.cliente_id = c.cliente_id
+JOIN
+    carros ca ON r.carro_id = ca.carro_id
+ORDER BY r.reserva_id ASC;
+
+CREATE OR REPLACE VIEW listar_alugueis AS
+SELECT
+    a.aluguel_id,
+    c.nome AS nome_cliente,
+	c.email,
+    ca.modelo,
+    ca.marca,
+    a.data_aluguel,
+    a.data_devolucao,
+	a.valor_total
+FROM
+    alugueis a
+JOIN
+    clientes c ON a.cliente_id = c.cliente_id
+JOIN
+    carros ca ON a.carro_id = ca.carro_id
+ORDER BY a.aluguel_id ASC;
+
+

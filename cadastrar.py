@@ -1,6 +1,7 @@
 #métodos de reservar, cadastrar e alugar aqui
 import psycopg2
-
+from datetime import datetime
+import listas
 conn = psycopg2.connect(dbname="dirigindomeucarro", user="postgres", password="5932652225rai")
 
 cur = conn.cursor()
@@ -49,14 +50,22 @@ def cadastrar_reserva(email, modelo, datainicio, datafim):
     except Exception as e:
         return e
 
-def cadastrar_aluguel(email, modelo, datainicio, datafim, valortotal):
+def cadastrar_aluguel(email, modelo, datainicio, datafim):
     try:
+        carroA = listas.listar_carro_modelo(modelo)
+        carro_inicial = float(carroA['preco_inicial'].replace('R$', '').replace(',', '.').replace('.', ''))
+        carro_diario= float(carroA['preco_diario'].replace('R$', '').replace(',', '.').replace('.', ''))
+        data1 = datetime.strptime(datainicio, '%Y-%m-%d')
+        data2 = datetime.strptime(datafim, '%Y-%m-%d')
+        diferenca = data2 - data1
+        dias = diferenca.days
+        funcao = (carro_inicial + float(dias) * carro_diario)
         cur.execute("INSERT INTO alugueis (cliente_id, carro_id, data_aluguel, data_devolucao, valor_total) VALUES (%s, %s, %s, %s, %s)",
                      (get_usuario_id(email),
                       get_carro_id(modelo),
                       datainicio,
                       datafim,
-                      float(valortotal)))
+                      float(funcao)))
         return "aluguel do carro " + modelo + " realizada!"
     except Exception as e:
         return e
