@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/media.css') }}">
+</head>
+<body>
+    <header>
+        <div id="title">
+            <h1>Radiator Springs</h1>
+            <h3>Concessionária</h3>
+        </div>
+
+        <ul>
+            <a href="/"><li>Início</li></a>
+            <a href="/compare_cars"><li>Comparar carros</li></a>
+            <a href="/alugar"><li>Alugar</li></a>
+            <a href="/reservar"><li>Reservar</li></a>
+            <a href="/car_list" id="inscreva-se-btn"><li>Ver todos os carros</li></a>
+        </ul>
+    </header>
+    <div>
+        <h1>Comparar Carros</h1>
+
+        <form action="/compare_cars_resultado" method="post">
+            <label for="carro_a">Escolha o Carro A:</label>
+            <select name="carro_a" id="carro_a">
+                {% for carro in carros %}
+                    <option value="{{ carro.modelo }}">{{ carro.modelo }}</option>
+                {% endfor %}
+            </select>
+    
+            <label for="carro_b">Escolha o Carro B:</label>
+            <select name="carro_b" id="carro_b">
+                {% for carro in carros %}
+                    <option value="{{ carro.modelo }}">{{ carro.modelo }}</option>
+                {% endfor %}
+            </select>
+    
+            <label for="dias">Número de Dias:</label>
+            <input type="number" id="dias" name="dias" min="1">
+    
+            <input type="submit" value="Comparar">
+        </form>
+    
+            <p>{{ resultado }}</p>
+    </div>
+    
+    
+</body>
+</html>

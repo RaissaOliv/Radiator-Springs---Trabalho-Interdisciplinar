@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/media.css') }}">
+    <title>Landing Page</title>
+</head>
+<body>
+    <header>
+        <div id="title">
+            <h1>Radiator Springs</h1>
+            <h3>Concessionária</h3>
+        </div>
+
+        <ul>
+            <a href="/"><li>Início</li></a>
+            <a href="/compare_cars"><li>Comparar carros</li></a>
+            <a href="/alugar"><li>Alugar</li></a>
+            <a href="/reservar"><li>Reservar</li></a>
+            <a href="/car_list" id="inscreva-se-btn"><li>Ver todos os carros</li></a>
+        </ul>
+    </header>
+
+    <main>
+        <aside>
+            <h2><span>Encontre aqui</span></h2>
+            <h2>o melhor carro!!</h2>
+            <p>
+                Descubra a excelência em automóveis na Radiator Springs. Estamos dedicados a proporcionar uma experiência única de compra, onde a qualidade, confiança e atendimento excepcional são nossos pilares.
+            </p>
+
+            <a href="/car_list" id="inscreva-se-btn"><li>Ver todos os carros</li></a>
+        </aside>
+
+        <article>
+            <iframe src="https://www.youtube.com/embed/hWlcw2PfoaA?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&playlist=hWlcw2PfoaA&loop=1" alt="">
+        </article>
+        
+    </main>
+    
+</body>
+</html>

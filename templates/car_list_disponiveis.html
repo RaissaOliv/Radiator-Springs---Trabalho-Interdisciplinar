@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/media.css') }}">
+</head>
+<body>
+    <header>
+        <div id="title">
+            <h1>Radiator Springs</h1>
+            <h3>Concessionária</h3>
+        </div>
+
+        <ul>
+            <a href="/"><li>Início</li></a>
+            <a href="/compare_cars"><li>Comparar carros</li></a>
+            <a href="/alugar"><li>Alugar</li></a>
+            <a href="/reservar"><li>Reservar</li></a>
+            <a href="/car_list" id="inscreva-se-btn"><li>Ver todos os carros</li></a>
+        </ul>
+    </header>
+
+    <h1>Lista de carros disponíveis</h1>
+
+    <div >
+        <form class="barra_pesquisa">
+            <input class="pesquisa" type="text" placeholder="Pesquisar carro">
+            <input class="enviar" type="submit" value="Enviar">
+        </form>
+    </div>
+    <br>
+    
+    <div>
+        <a href="/car_list_disponiveis" id="inscreva-se-btn"><li>Carros disponíveis</li></a>
+        <a href="/car_list_populares" id="inscreva-se-btn"><li>Carros populares</li></a>
+        <a href="/car_list_luxo" id="inscreva-se-btn"><li>Carros de luxo</li></a>
+    </div>
+    
+    <table class="content-table">
+      <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Ano</th>
+        <th>Placa</th>
+        <th>Preço Inicial</th>
+        <th>Preço Diário</th>
+        <th>Disponível</th>
+    </tr>
+    {% for carro in carros_disponiveis %}
+    <tr>
+        <td>{{ carro.id }}</td>
+        <td>{{ carro.marca }}</td>
+        <td>{{ carro.modelo }}</td>
+        <td>{{ carro.ano }}</td>
+        <td>{{ carro.placa }}</td>
+        <td>{{ carro.preco_inicial }}</td>
+        <td>{{ carro.preco_diario }}</td>
+        <td>{{ carro.disponivel }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>

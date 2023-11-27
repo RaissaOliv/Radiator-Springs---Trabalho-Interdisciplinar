@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/media.css') }}">
+</head>
+<body>
+    <header>
+        <div id="title">
+            <h1>Radiator Springs</h1>
+            <h3>Concessionária</h3>
+        </div>
+
+        <ul>
+            <a href="/"><li>Início</li></a>
+            <a href="/compare_cars"><li>Comparar carros</li></a>
+            <a href="/alugar"><li>Alugar</li></a>
+            <a href="/reservar"><li>Reservar</li></a>
+            <a href="/car_list" id="inscreva-se-btn"><li>Ver todos os carros</li></a>
+        </ul>
+    </header>
+
+    <h1>Escolha o carro que deseja reservar e conclua o cadastro</h1>
+    <h4>Se ja tiver cadastro apenas digite seu email</h4>
+
+    <main>
+      <aside>
+        <form class="select" action="/reservar_result", method="post">
+
+          <h3>Escolha um carro</h3>
+          <select name="carro_a" id="carro_a">
+            {% for carro in carros %}
+                <option value="{{ carro.modelo }}">{{ carro.modelo }}</option>
+            {% endfor %}
+          </select>
+
+          <p>Se ja tiver cadastro:</p>
+
+          <input type="email" placeholder="E-mail" name="emailReserva">
+          <input type="date" placeholder="datareserva" name="datareserva"/>
+          <input type="date" placeholder="datadevolucao" name="datadevolucao"/>
+          <input type="submit" value="Enviar">
+        </form>
+        <form class="select" action="/reservar_result_cadastro" method="post">
+          <p>Se ainda nao tiver um cadastro, cadastre-se:</p>
+
+          <input type="text" name="nome" placeholder="Nome">
+          <input type="email" name="email" placeholder="E-mail">
+          <input type="text" name="telefone" placeholder="Telefone">
+          <input type="submit" value="Enviar">
+
+        </form>
+      </aside>
+  
+      <article>
+        <table class="content-table">
+          <tr>
+            <th>ID</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Ano</th>
+            <th>Placa</th>
+            <th>Preço Inicial</th>
+            <th>Preço Diário</th>
+            <th>Disponível</th>
+        </tr>
+        {% for carro in carros_disponiveis %}
+        <tr>
+            <td>{{ carro.id }}</td>
+            <td>{{ carro.marca }}</td>
+            <td>{{ carro.modelo }}</td>
+            <td>{{ carro.ano }}</td>
+            <td>{{ carro.placa }}</td>
+            <td>{{ carro.preco_inicial }}</td>
+            <td>{{ carro.preco_diario }}</td>
+            <td>{{ carro.disponivel }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+      </article>
+    </main>
+    
+    
+</body>
+</html>

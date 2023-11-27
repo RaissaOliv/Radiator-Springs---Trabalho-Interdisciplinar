@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/media.css') }}">
+</head>
+<body>
+    <header>
+        <div id="title">
+            <h1>Radiator Springs</h1>
+            <h3>Concessionária</h3>
+            <h5>ADM</h5>
+        </div>
+
+        <ul>
+            <a href="/" id="inscreva-se-btn"><li>Ir para home</li></a>
+        </ul>
+    </header>
+
+    <h1>Lista de reservas</h1>
+    
+    <table class="content-table">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>Data inicio</th>
+        <th>Data fim</th>
+    </tr>
+    {% for reserva in reservas %}
+    <tr>
+        <td>{{ reserva.id_reserva }}</td>
+        <td>{{ reserva.nome_cliente }}</td>
+        <td>{{ reserva.modelo_carro }}</td>
+        <td>{{ reserva.marca_carro }}</td>
+        <td>{{ reserva.data_inicio }}</td>
+        <td>{{ reserva.data_fim }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <h1>Lista de alugueis</h1>
+    
+    <table class="content-table">
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Email Cliente</th>
+        <th>Modelo Carro</th>
+        <th>Marca Carro</th>
+        <th>Data Alguel</th>
+        <th>Data Devolucao</th>
+        <th>Valor Total</th>
+    </tr>
+    {% for aluguel in alugueis %}
+    <tr>
+        <td>{{ aluguel.id_aluguel }}</td>
+        <td>{{ aluguel.nome_cliente }}</td>
+        <td>{{ aluguel.email_cliente }}</td>
+        <td>{{ aluguel.modelo_carro }}</td>
+        <td>{{ aluguel.marca_carro }}</td>
+        <td>{{ aluguel.data_aluguel }}</td>
+        <td>{{ aluguel.data_devolucao }}</td>
+        <td>{{ aluguel.valor_total }}</td>
+    </tr>
+{% endfor %}
+    </table>
+</body>
+</html>
