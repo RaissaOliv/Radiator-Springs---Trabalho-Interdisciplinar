@@ -68,11 +68,11 @@ def alugar_result_cadastro():
     return render_template('alugar_result_cadastro.html',
                             carros_disponiveis=listas.listar_carros_disponiveis(),
                             carros=listas.listar_carros(),
-                            cadastrou=cadastro)
+                            alugou=cadastro)
 
 @app.route('/alugar_result', methods=['POST', 'GET'])
 def alugar_result():
-    email = request.form.get('emailreserva')
+    email = request.form.get('emailReserva')
     modelo = request.form.get('carro_a')
     datareserva = request.form['datareserva']
     datadevolucao = request.form['datadevolucao']
@@ -99,7 +99,7 @@ def reservar_result_cadastro():
 
 @app.route('/reservar_result', methods=['POST', 'GET'])
 def reservar_result():
-    email = request.form.get('emailreserva')
+    email = request.form.get('emailReserva')
     modelo = request.form.get('carro_a')
     datareserva = request.form['datareserva']
     datadevolucao = request.form['datadevolucao']

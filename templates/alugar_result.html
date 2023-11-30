@@ -10,7 +10,7 @@
     <header>
         <div id="title">
             <h1>Radiator Springs</h1>
-            <h3>Concessionária</h3>
+            <h3>Locadora</h3>
         </div>
 
         <ul>
@@ -22,14 +22,14 @@
       </ul>
     </header>
 
-    <h1>Escolha o carro que deseja alugar e conclua o cadastro</h1>
-    <h4>Se ja tiver cadastro apenas digite seu email</h4>
+    <h1>Escolha o carro que deseja reservar e conclua o cadastro</h1>
+    <p>Se ja tiver cadastro apenas digite seu email</p>
 
     <main>
       <aside>
         <form class="select" action="/alugar_result" method="post">
           <p> {{resultado}} </p>
-          <h3>Escolha um carro</h3>
+          <p>Escolha um carro</p>
           <select name="carro_a" id="carro_a">
             {% for carro in carros %}
                 <option value="{{ carro.modelo }}">{{ carro.modelo }}</option>
@@ -44,6 +44,7 @@
 
         </form>
         <form class="select" action="/alugar_result_cadastro" method="post">
+          <br>
           <p>Se ainda nao tiver um cadastro, cadastre-se:</p>
           <input type="text" name="nome" placeholder="Nome">
           <input type="email" name="email" placeholder="E-mail">
