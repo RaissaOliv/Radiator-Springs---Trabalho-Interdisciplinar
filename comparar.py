@@ -22,10 +22,10 @@ def calcularMelhorCarro(carroA, carroB, dias):
     f1 = (carro_a_inicial + float(dias) * carro_a_diario)
     f2 = (carro_b_inicial + float(dias) * carro_b_diario)
     formula = f1 - f2
-    if formula > 0:
+    if formula < 0:
        return carroA['modelo'] + " (preço: "+ str(f1) + ") é melhor que " + carroB['modelo'] + " preço: "+ str(f2) +" em uma viagem de " + dias + " dias."
     
-    elif formula < 0:
+    elif formula > 0:
         return carroB['modelo'] + " (preço: "+ str(f2) + ") é melhor que " + carroA['modelo'] + " (preço: "+ str(f1) +") em uma viagem de " + dias + " dias."
     
     else:
