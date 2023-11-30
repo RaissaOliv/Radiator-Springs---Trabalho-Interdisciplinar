@@ -50,32 +50,16 @@ INSERT INTO clientes (nome, email, telefone) VALUES
 
 -- tres primieros nao estao disponiveis e tem 5 de luxo e 5 popular
 INSERT INTO carros (marca, modelo, ano, placa, preco_inicial, preco_diario, disponivel, popular, luxo) VALUES
-('Toyota', 'Corolla', 2020, 'ABC123', 25000.00, 150.00, 'no', 'yes', 'no'),
-('Honda', 'Civic', 2019, 'DEF456', 22000.00, 130.00, 'no', 'yes', 'no'),
-('Ford', 'Focus', 2021, 'GHI789', 27000.00, 160.00, 'no', 'yes', 'no'),
-('Chevrolet', 'Cruze', 2022, 'JKL012', 30000.00, 180.00, 'yes', 'yes', 'no'),
-('BMW', 'X3', 2021, 'MNO345', 40000.00, 250.00, 'yes', 'no', 'yes'),
-('Mercedes', 'C-Class', 2020, 'PQR678', 38000.00, 230.00, 'yes', 'no', 'yes'),
-('Audi', 'A4', 2019, 'STU901', 35000.00, 200.00, 'yes', 'no', 'yes'),
-('Nissan', 'Altima', 2022, 'VWX234', 28000.00, 170.00, 'yes', 'yes', 'no'),
-('Hyundai', 'Elantra', 2020, 'YZA567', 24000.00, 140.00, 'yes', 'no', 'yes'),
-('Kia', 'Optima', 2021, 'BCD890', 26000.00, 160.00, 'yes', 'no', 'yes');
-
-INSERT INTO alugueis (cliente_id, carro_id, data_aluguel, data_devolucao, valor_total) VALUES
-(1, 1, '2023-01-01', '2023-01-10', 1200.00),
-(3, 2, '2023-02-15', '2023-02-20', 750.00),
-(7, 3, '2023-03-10', '2023-03-20', 900.00);
-
-INSERT INTO reservas (cliente_id, carro_id, data_inicio, data_fim, reserva_pai_id) VALUES
-(1, 10, '2023-01-05', '2023-01-08', null),
-(3, 5, '2023-02-18', '2023-02-25', null),
-(2, 6, '2023-03-15', '2023-03-18', null),
-(4, 7, '2023-04-08', '2023-04-12', null),
-(5, 8, '2023-05-18', '2023-05-22', null),
-(6, 9, '2023-06-20', '2023-06-28', null),
-(7, 4, '2023-07-12', '2023-07-18', null);
-
--- Criação da View
+('Toyota', 'Corolla', 2020, 'ABC123', 250.00, 100.00, 'yes', 'yes', 'no'),
+('Honda', 'Civic', 2019, 'DEF456', 220.00, 105.00, 'yes', 'yes', 'no'),
+('Ford', 'Focus', 2021, 'GHI789', 270.00, 130.00, 'yes', 'yes', 'no'),
+('Chevrolet', 'Cruze', 2022, 'JKL012', 300.00, 129.00, 'yes', 'yes', 'no'),
+('BMW', 'X3', 2021, 'MNO345', 450.00, 250.00, 'yes', 'no', 'yes'),
+('Mercedes', 'C-Class', 2020, 'PQR678', 410.00, 260.00, 'yes', 'no', 'yes'),
+('Audi', 'A4', 2019, 'STU901', 400.00, 280.00, 'yes', 'no', 'yes'),
+('Nissan', 'Altima', 2022, 'VWX234', 280.00, 135.00, 'yes', 'yes', 'no'),
+('Ferrari', 'F8', 2020, 'YZA567', 600.00, 300.00, 'yes', 'no', 'yes'),
+('Tesla', 'X', 2021, 'BCD890', 500.00, 310.00, 'yes', 'no', 'yes');
 
 CREATE OR REPLACE VIEW carro_disponivel AS SELECT carros.carro_id,
 carros.marca, carros.modelo, carros.ano, carros.placa,
@@ -131,4 +115,8 @@ JOIN
     carros ca ON a.carro_id = ca.carro_id
 ORDER BY a.aluguel_id ASC;
 
-
+SELECT * FROM carro_disponivel
+SELECT * FROM carro_popular
+SELECT * FROM carro_luxo
+SELECT * FROM listar_reservas
+SELECT * FROM listar_alugueis
